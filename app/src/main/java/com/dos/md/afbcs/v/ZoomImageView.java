@@ -1,9 +1,8 @@
-package com.dos.md.afbcs.v;
-
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -12,6 +11,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
+1package com.dos.md.afbcs.v;
 
 /**
  * Created by DOS on 002/2/4/2016.
@@ -47,28 +48,60 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         super(context, attrs, defStyleAttr);
         mScaleMatrix = new Matrix();
         setScaleType(ScaleType.MATRIX);
-        mScaleGestureDetector = new ScaleGestureDetector(context, this);
         setOnTouchListener(this);
+        mScaleGestureDetector = new ScaleGestureDetector(context, this);
         mTouchSloop = ViewConfiguration.get(context).getScaledTouchSlop();
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
+if (isAutoScale)return true;
                 float x = e.getX();
                 float y = e.getY();
-                if (getScale() < mMidScale){
+                if (getScale() < mMidScale) {
 
-                    mScaleMatrix.postScale(mMidScale/getScale(), mMidScale/getScale(),x,y);
-                    setImageMatrix(mScaleMatrix);
-                }else {
-                    mScaleMatrix.postScale(mInitScale/getScale(), mInitScale/getScale(),x,y);
-                    setImageMatrix(mScaleMatrix);
+                   /* mScaleMatrix.postScale(mMidScale / getScale(), mMidScale / getScale(), x, y);
+                    setImageMatrix(mScaleMatrix);// TODO: 024/24/4/2016 设置矩阵*/
+                    postDelayed(new AutoRunnable(mMidScale,x,y),16);isAutoScale=true;
+                } else {
+                    /*mScaleMatrix.postScale(mInitScale / getScale(), mInitScale / getScale(), x, y);
+                    setImageMatrix(mScaleMatrix);*/                    postDelayed(new AutoRunnable(mInitScale,x,y),16);isAutoScale=true;
+
                 }
 
-                    return true;
+                return true;
             }
         });
     }
+private boolean isAutoScale;//避免狂击
+    /**
+     * 自动变换（scale）
+     */
+private class AutoRunnable implements Runnable{
+private float mTargetScale, x,y,tmpScale;//目标缩放值与缩放中心
+        private final float BIGGER=1.07f,SMALLER=0.93F;//缩放梯度
+        public AutoRunnable(float targetScale, float x, float y){
+            this.mTargetScale=targetScale;this.x=x;this.y=y;
+            if (getScale()<mTargetScale){
+                tmpScale=BIGGER;
 
+            }if (getScale()>mTargetScale)tmpScale=SMALLER;
+        }
+    @Override
+    public void run() {
+mScaleMatrix.postScale(tmpScale,tmpScale,x,y);
+        checkBorderAndCenterWhenScale();setImageMatrix(mScaleMatrix);
+        float currentScale=getScale();
+        if ((tmpScale<1.0f&&currentScale>tmpScale)||(tmpScale>1.0f&&currentScale<tmpScale)){//scale
+            postDelayed(this,16);//自调
+        }else{
+            //设置为目标scale值
+            float scale=mTargetScale/currentScale;
+            mScaleMatrix.postScale(scale,scale,x,y);
+            setImageMatrix(mScaleMatrix);
+            isAutoScale=false;
+        }
+    }
+}
     @Override
     public void onGlobalLayout() {
         if (!mOnce) {
@@ -123,9 +156,9 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     public float getScale() {
         float values[] = new float[9];
-        mScaleMatrix.getValues(values);
+        mScaleMatrix.getValues(values);//初始化矩阵
 
-        return values[Matrix.MSCALE_X];
+        return values[Matrix.MSCALE_X];//取矩阵第一个值
     }
 
     @Override
@@ -184,7 +217,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     }
 
-    private RectF getMatrixRectF() {//获取图片放大/缩小后的宽高和margin b,t,l,r
+    private RectF getMatrixRectF() {//获取图片放大/缩小后的宽高和margin
         Matrix matrix = mScaleMatrix;
         RectF rectF = new RectF();
         Drawable d = getDrawable();
@@ -226,15 +259,27 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
             isCanDrag = false;
             mLastX = x;
             mLastY = y;
-        }
+        }               RectF rectF= getMatrixRectF();
+
         mLastPointerCount = pointerCount;
         switch (event.getAction()) {
+            case  MotionEvent.ACTION_DOWN://滑动拦截eg.与ViewPager嵌套
+if (rectF.width()>getWidth()+0.01||rectF.height()>getHeight()+0.01){
+
+if (getParent() instanceof ViewPager    )
+    getParent().requestDisallowInterceptTouchEvent(true);//不允许父控件拦截子自己的事件
+
+}
+
+                break;
             case MotionEvent.ACTION_MOVE:
+                if (rectF.width()>getWidth()+0.01||rectF.height()>getHeight()+0.01){
+                    getParent().requestDisallowInterceptTouchEvent(true);
                 float dx = x - mLastX;
                 float dy = y - mLastY;
                 if (!isCanDrag) isCanDrag = isMoveAction(dx, dy);
                 else {
-                    RectF rectF = getMatrixRectF();
+                   // RectF rectF = getMatrixRectF();
                     if (getDrawable() != null) {
                         isCheckLeftAndRight = isCheckTopAndBottom = true;
 
@@ -265,6 +310,9 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         return true;
     }
 
+    /**
+     * 检查边界
+     */
     private void checkBorderWhenTranslate() {
         RectF rect = getMatrixRectF();
         float deltaX = 0;
@@ -289,6 +337,11 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         mScaleMatrix.postTranslate(deltaX, deltaY);
     }
 
+    /**touchsloop
+     * @param dx
+     * @param dy
+     * @return
+     */
     private boolean isMoveAction(float dx, float dy) {
 
         return Math.sqrt(dx * dx + dy * dy) > mTouchSloop;

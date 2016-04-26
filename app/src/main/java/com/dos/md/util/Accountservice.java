@@ -12,12 +12,12 @@ public class Accountservice {
     public static void getCaptch(String phone, int b, final TextView getCaptcha) {
         long time = 0;
         if (!U_Validate.validateMobile(phone)) return;
-        long currentTime = System.currentTimeMillis();
+        //long currentTime = System.currentTimeMillis();
         if (System.currentTimeMillis() - time > b) {
             getCaptcha(phone);
             new CountDownTimer(b, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    getCaptcha.setText("" + millisUntilFinished / 1000);
+                    getCaptcha.setText(String.valueOf(millisUntilFinished / 1000));
                 }
 
                 public void onFinish() {
@@ -25,7 +25,6 @@ public class Accountservice {
                 }
             }.start();
         }
-        time = currentTime;
     }
 
     public static void logI(String phone, String pass, String captcha, String surePass) {

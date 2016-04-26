@@ -15,7 +15,7 @@ public class LsBluetoothHelp {
     //单例
 
 
-    public static LsBluetoothHelp lsBluetoothHelp;
+    private static LsBluetoothHelp lsBluetoothHelp;
     private LsBluetoothHelp(){}
     public static LsBluetoothHelp getBluetoothHelp(){
         if(lsBluetoothHelp==null){
@@ -89,10 +89,7 @@ public class LsBluetoothHelp {
 
      */
     public static boolean isSupportBluetooth(Context context){
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
-            return true;
-        }
-        return false;
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH);
     }
 
     /**
@@ -114,10 +111,7 @@ public class LsBluetoothHelp {
      */
     public static boolean isSupportBle(Context context) {
 
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            return true;
-        }
-        return false;
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);// TODO: 2016/4/25 0025 18+ 
     }
 
 }

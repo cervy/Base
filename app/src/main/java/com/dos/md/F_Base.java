@@ -17,10 +17,6 @@ public abstract class F_Base extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -44,8 +40,8 @@ public abstract class F_Base extends Fragment {
         //数据初始化
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String param1 = getArguments().getString(ARG_PARAM1);
+            String param2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -83,8 +79,12 @@ public abstract class F_Base extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+
+            //mActivity = (Activity)context;//避免getActivity为空
         }
     }
+
+    private Activity mActivity;
 
     public interface OnFragmentInteractionListener {
         //定义与A交互的接口
@@ -106,5 +106,6 @@ public abstract class F_Base extends Fragment {
     protected void toAty(Class<? extends Activity> clazz) {
         startActivity(new Intent(getActivity(), clazz));
     }
+
 
 }

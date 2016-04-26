@@ -11,7 +11,7 @@ import android.os.Message;
  */
 public class U_Handler {
 
-    public static final Handler HANDLER = new Handler(Looper.getMainLooper());
+    private static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
     public static void runOnUiThread(Runnable runnable){
         HANDLER.post(runnable);

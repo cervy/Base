@@ -9,7 +9,10 @@ import java.util.Map;
 
 
 public class U_SP {
-
+    /*private static SharedPreferences mSp;
+    public static void initSP(SharedPreferences sp) {
+        mSp = sp;
+    }*/
     /**
      * SharedPreferences存储在sd卡中的文件名字
      */
@@ -115,7 +118,7 @@ public class U_SP {
             try {
                 Class clz = SharedPreferences.Editor.class;
                 return clz.getMethod("apply");
-            } catch (NoSuchMethodException e) {
+            } catch (NoSuchMethodException ignored) {
             }
 
             return null;
@@ -130,9 +133,8 @@ public class U_SP {
                     sApplyMethod.invoke(editor);
                     return;
                 }
-            } catch (IllegalArgumentException expected) {
-            } catch (IllegalAccessException expected) {
-            } catch (InvocationTargetException expected) {
+            } catch (IllegalArgumentException | IllegalAccessException ignored) {
+            } catch (InvocationTargetException ignored) {
             }
             editor.commit();
         }

@@ -1,26 +1,15 @@
-﻿package com.dos.md;
+package com.dos.md;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
-import java.io.File;
-import java.lang.ref.WeakReference;
 
 /*DOS   封装3方库再用， 常量化键 compile 'com.github.thepacific:adapter:1.0.3'
 日志利器：StackTraceElement.getMethodName()....
@@ -55,14 +44,18 @@ setCompoundDrawablesWithIntrinsicBounds()
 ListView的ClipPadding设为false，就能为ListView设置各种padding而不会出现丑陋的滑动“禁区”
 startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));去拨号界面，带上号码可省权限
 判断（在onCreate（和onResume里））全局user为空否决定是否已登录*/
-public class A_Base extends AppCompatActivity implements View.OnClickListener {
+public class A_Base extends AppCompatActivity {
     private FrameLayout container;
     public Toolbar toolbar;
-    private MyHandler handler;
+    //private MyHandler handler;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawable(null);
+
         setContentView(R.layout.activity_a_base);
+        getWindow().setBackgroundDrawable(null);
+
         /*getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);设置全屏*/
        /* getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//屏幕常亮
        //透明状态栏        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -70,17 +63,17 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
         //去掉默认添加的背景成了黑背景 getWindow().setBackgroundDrawable(null);*/
         container = (FrameLayout) findViewById(R.id.container);
         initToolbar();
-        handler = new MyHandler(this);
+        //handler = new MyHandler(this);
         // 设置分享的内容setShareContent();
 
     }
-    /*protected <T extends View> T f(int rid) {
+    protected <T extends View> T f(int rid) {
         return (T) findViewById(rid);
-    }//免按强转键。。。。*/
+    }//免按强转键。。。。
 
-    protected void initListeners(View... views) {
+    protected void initListeners(View.OnClickListener listener, View... views) {
         for (View view : views) {
-            view.setOnClickListener(this);
+            view.setOnClickListener(listener);
         }
     }
 
@@ -124,18 +117,13 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    /*右菜单+(左侧导航)
-    public final void rightMenu(int title, Toolbar.OnMenuItemClickListener listener) {
+    //右菜单+(左侧返回)
+    public final void rightMenu(String title, Toolbar.OnMenuItemClickListener listener) {
         getSupportActionBar().setTitle(title);
-        //在 setSupportActionBar后
-        toolbar.setOnMenuItemClickListener(listener);
-    }*/
 
-
-    /*左侧返回右侧菜单*/
-    public final void leftBackRightMenu(int title, Toolbar.OnMenuItemClickListener listener) {
         toolbar.setOnMenuItemClickListener(listener);
     }
+
 
     protected final void addView(int layoutId) {
         View child = LayoutInflater.from(this).inflate(layoutId, null);
@@ -143,49 +131,42 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
     }
 
     protected final void showToast(int text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     public final void showToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onClick(View v) {
-        onClickk(v);
-    }
 
-    public void onClickk(View v) {
-    }
 
 
     /*protected final void showSnackbar(View v, int text, int actionName, View.OnClickListener listener) {
         Snackbar.make(v, text, Snackbar.LENGTH_LONG).setAction(actionName, listener).show();
     }*/
 
-    private static class MyHandler extends Handler {
+    /*private static class MyHandler extends Handler {
 
         WeakReference<A_Base> mReference = null;
 
         MyHandler(A_Base activity) {
-            this.mReference = new WeakReference<A_Base>(activity);
+            this.mReference = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             A_Base outer = mReference.get();
-            if (outer == null && outer.isFinishing()) {
+            if (!(outer == null && outer.isFinishing())) {
+                outer.handleMessage(msg);
 
-                return;
             }
 
-            outer.handleMessage(msg);
         }
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
-        if (handler != null) handler.removeCallbacksAndMessages(null);
+        //if (handler != null) handler.removeCallbacksAndMessages(null);
         super.onDestroy();
         //杀死后台线程android.os.Debug.stopMethodTracing();
     }
@@ -222,8 +203,8 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void handleMessage(Message msg) {
-    }
+    /*public void handleMessage(Message msg) {
+    }*/
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
@@ -240,7 +221,7 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
         super.onBackPressed();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     /*@Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -272,27 +253,27 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
     /**
      * 注册广播
      */
-    public static void registeBR(Context mContext, String action, BroadcastReceiver br) {
+   /* protected void registeBR(String action, BroadcastReceiver br) {
         IntentFilter filter = new IntentFilter();
         //filter.addAction(TA_ANDROID_NET_CHANGE_ACTION);
         filter.addAction(action);
-        mContext.registerReceiver(br, filter);
-    }
+        getApplicationContext().registerReceiver(br, filter);
+    }*/
 
     /*去相册取   startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI), 0);
 */
     /*发短信*/
-    public static void sendSms(Context context, String phoneNumber,
+    /*public static void sendSms(Context context, String phoneNumber,
                                String content) {
         Uri uri = Uri.parse("smsto:"
                 + (TextUtils.isEmpty(phoneNumber) ? "" : phoneNumber));
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra("sms_body", TextUtils.isEmpty(content) ? "" : content);
         context.startActivity(intent);
-    }
+    }*/
 
     /*安装apk*/
-    public static void installApk(Context context, File file) {
+    /*public static void installApk(Context context, File file) {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
@@ -301,10 +282,10 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
                 "application/vnd.android.package-archive");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-    }
+    }*/
 
     /*获取apk版本号  */
-    public static String getAppVersion(Context context) {
+    /*public static String getAppVersion(Context context) {
         String version = "0";
         try {
             version = context.getPackageManager().getPackageInfo(
@@ -315,19 +296,19 @@ public class A_Base extends AppCompatActivity implements View.OnClickListener {
         return version;
     }
 
-    /*是否有sd卡*/
+    *//*是否有sd卡*//*
     public static boolean haveSDCard() {
         return android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED);
-    }
+    }*/
 
     /*回到home*/
-    public static void toHome(Context context) {
+    /*public static void toHome(Context context) {
         Intent mHomeIntent = new Intent(Intent.ACTION_MAIN);
         mHomeIntent.addCategory(Intent.CATEGORY_HOME);
         mHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         context.startActivity(mHomeIntent);
-    }
+    }*/
 }
 

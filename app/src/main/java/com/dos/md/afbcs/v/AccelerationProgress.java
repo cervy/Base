@@ -214,8 +214,8 @@ public class AccelerationProgress extends View implements LinearAnimation.Linear
     private void drawHook(Canvas canvas) {
         Path hookPath = new Path();
         double sweepAngle = Math.PI / 180 * 180;
-        float y = (float) Math.sin(sweepAngle) * (getBigCircleRadius()) + rectF.height() / 2;
-        float x = (float) Math.cos(sweepAngle) * (getBigCircleRadius()) + rectF.width() / 2;
+      /*  float y = (float) Math.sin(sweepAngle) * (getBigCircleRadius()) + rectF.height() / 2;
+        float x = (float) Math.cos(sweepAngle) * (getBigCircleRadius()) + rectF.width() / 2;*/
 //        int count = canvas.getSaveCount();
 //        hookPath.moveTo(x, y);
         float i = getBigCircleRadius() / 2;
@@ -263,8 +263,7 @@ public class AccelerationProgress extends View implements LinearAnimation.Linear
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Float value = (Float) animation.getAnimatedValue();
-                ratio = value;
+                ratio = (Float) animation.getAnimatedValue();
                 invalidate();
             }
         });

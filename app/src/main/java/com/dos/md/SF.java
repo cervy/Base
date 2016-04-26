@@ -32,7 +32,7 @@ public interface SF {
     //应用缓存根目录
     String ROOT_CACHE_PATH = Environment.getExternalStorageDirectory() + "/md/";
     //缓存用户信息key
-    String CACHE_USER_KEY = "user_key";
+    String CACHE_USER_KEY = "user_model";
 
     String ROOT_DATA_CACHE_PATH = ROOT_CACHE_PATH + "data/";
 

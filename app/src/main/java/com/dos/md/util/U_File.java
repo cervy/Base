@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +26,7 @@ public class U_File {
      */
     public static String checkFilePath(String fileName) {
 
-        String fileRealPath = "";
+        String fileRealPath;
         if (fileName.startsWith(SDPATH)) {
             fileRealPath = fileName;
         } else {
@@ -102,9 +101,9 @@ public class U_File {
 
                 File files[] = file.listFiles(); // 声明目录下所有的文件 files[];
 
-                for (int i = 0; i < files.length; i++) { // 遍历目录下所有的文件
+                for (File file1 : files) { // 遍历目录下所有的文件
 
-                    deleteFile(files[i]); // 把每个文件 用这个方法进行迭代
+                    deleteFile(file1); // 把每个文件 用这个方法进行迭代
 
                 }
             }
@@ -122,12 +121,12 @@ public class U_File {
         File file = null;
         OutputStream output = null;
         try {
-            String ls[] = new String[10];//文件夹最多嵌套十层
+            String ls[];//文件夹最多嵌套十层
 
             String filePath = "";
             ls = path.split("/");
-            for (int i = 0; i < ls.length; i++) {
-                filePath = filePath + ls[i];
+            for (String l : ls) {
+                filePath = filePath + l;
                 filePath = filePath + "/";
 
                 creatSDDir(filePath);
@@ -146,6 +145,7 @@ public class U_File {
             e.printStackTrace();
         } finally {
             try {
+                assert output != null;
                 output.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -165,7 +165,7 @@ public class U_File {
     public static String readFile(String fileName) {
 
         if (isFileExist(fileName)) {
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             File file = new File(fileName);
             try {
                 FileInputStream fis = new FileInputStream(file);
@@ -174,8 +174,6 @@ public class U_File {
                     sb.append((char) c);
                 }
                 fis.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -222,6 +220,7 @@ public class U_File {
             e.printStackTrace();
         } finally {
             try {
+                assert out != null;
                 out.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -280,7 +279,7 @@ public class U_File {
         long size = 0;
 
         File file = new File(filePath);
-        if (file != null && file.exists()) {
+        if (file.exists()) {
             size = file.length();
         }
         return size;
@@ -311,7 +310,7 @@ public class U_File {
      */
     public static String formatFileSize(long fileS) {
         java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
-        String fileSizeString = "";
+        String fileSizeString;
         if (fileS < 1024) {
             fileSizeString = df.format((double) fileS) + "B";
         } else if (fileS < 1048576) {
@@ -355,7 +354,7 @@ public class U_File {
      * 获取目录文件个数
      */
     public long getFileList(File dir) {
-        long count = 0;
+        long count;
         File[] files = dir.listFiles();
         count = files.length;
         for (File file : files) {
@@ -413,10 +412,7 @@ public class U_File {
     public static boolean isSDCardExists() {
         String sDCardStatus = Environment.getExternalStorageState();
         boolean status;
-        if (sDCardStatus.equals(Environment.MEDIA_MOUNTED)) {
-            status = false;
-        } else
-            status = true;
+        status = !sDCardStatus.equals(Environment.MEDIA_MOUNTED);
         return status;
     }
 
@@ -433,7 +429,7 @@ public class U_File {
         if (!fileName.equals("")) {
 
             File path = Environment.getExternalStorageDirectory();
-            String fileRealPath = "";
+            String fileRealPath;
             if (fileName.startsWith(path.toString())) {
                 fileRealPath = fileName;
             } else {
@@ -450,9 +446,9 @@ public class U_File {
 
 
                 try {
-                    for (int i = 0; i < listfile.length; i++) {
+                    for (String aListfile : listfile) {
                         File deletedFile = new File(newPath.toString() + "/"
-                                + listfile[i].toString());
+                                + aListfile);
                         deletedFile.delete();
                     }
                     newPath.delete();
@@ -485,7 +481,7 @@ public class U_File {
         if (!fileName.equals("")) {
 
             File path = Environment.getExternalStorageDirectory();
-            String fileRealPath = "";
+            String fileRealPath;
             if (fileName.startsWith(path.toString())) {
                 fileRealPath = fileName;
             } else {

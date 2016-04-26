@@ -57,10 +57,7 @@ public class U_Validate {
     public static boolean validateMobile(String tel) {
         String telRegex = "[1][3758]\\d{9}";//;
 
-        if (TextUtils.isEmpty(tel))
-            return false;
-        else
-            return tel.matches(telRegex);
+        return !TextUtils.isEmpty(tel) && tel.matches(telRegex);
     }
 
     public static String getSafeMobileNum(String mobiles) {
@@ -84,7 +81,7 @@ public class U_Validate {
     public static boolean isUserNameOrPasswd(String usermane) {
 
         for (int i = 0; i < usermane.length(); i++) {
-            int chr1 = (char) usermane.charAt(i);
+            int chr1 = usermane.charAt(i);
             if (chr1 > 19968) {
                 return false;
             }
@@ -288,11 +285,11 @@ public class U_Validate {
 
 
     //把字节数组转换成16进制字符串1
-    public static final String bytesToHexString(byte[] bArray) {
-        StringBuffer sb = new StringBuffer(bArray.length);
+    public static String bytesToHexString(byte[] bArray) {
+        StringBuilder sb = new StringBuilder(bArray.length);
         String sTemp;
-        for (int i = 0; i < bArray.length; i++) {
-            sTemp = Integer.toHexString((int) (0xFF & bArray[i]));
+        for (byte aBArray : bArray) {
+            sTemp = Integer.toHexString(0xFF & aBArray);
             if (sTemp.length() < 2)
                 sb.append(0);
             sb.append(sTemp.toUpperCase());
@@ -427,8 +424,8 @@ public class U_Validate {
                 folder.mkdirs();
             }
         }
-        if (folderName != null) {
-            folder = new File(folder, folderName);
+        if (null != null) {// TODO: 2016/4/25 0025  
+            folder = new File(folder, null);
             if (!folder.exists()) {
                 folder.mkdirs();
             }

@@ -12,8 +12,8 @@ public class U_MD5 {
 
     private static final int STREAM_BUFFER_LENGTH = 1024;
 
-    public static MessageDigest getDigest(final String algorithm) throws NoSuchAlgorithmException {
-        return MessageDigest.getInstance(algorithm);
+    public static MessageDigest getDigest() throws NoSuchAlgorithmException {
+        return MessageDigest.getInstance("MD5");
     }
 
     public static byte[] md5(String txt) {
@@ -22,7 +22,7 @@ public class U_MD5 {
 
     public static byte[] md5(byte[] bytes) {
         try {
-            MessageDigest digest = getDigest("MD5");
+            MessageDigest digest = getDigest();
             digest.update(bytes);
             return digest.digest();
         } catch (NoSuchAlgorithmException e) {
@@ -32,7 +32,7 @@ public class U_MD5 {
     }
 
     public static byte[] md5(InputStream is) throws NoSuchAlgorithmException, IOException {
-        return updateDigest(getDigest("MD5"), is).digest();
+        return updateDigest(getDigest(), is).digest();
     }
 
     public static MessageDigest updateDigest(final MessageDigest digest, final InputStream data) throws IOException {

@@ -27,6 +27,7 @@ public class A_ScrollToEnd extends AppCompatActivity {
         flipper.startFlipping();
 
         s = (ScrollView) findViewById(R.id.scroll);
+        assert s != null;
         s.scrollTo(0, -30);//（滚动条）向下滚动到30
         s.scrollBy(0, -30);//每次向下滚动30
         s.setOnTouchListener(new View.OnTouchListener() {//兼听scrollView滑动到底部
@@ -56,9 +57,9 @@ public class A_ScrollToEnd extends AppCompatActivity {
     }
 
     private void flipperAddV() {
-        for (int i = 0; i < image.length; i++) {
+        for (int anImage : image) {
             ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(image[i]);
+            imageView.setBackgroundResource(anImage);
             flipper.addView(imageView);
         }
     }

@@ -58,9 +58,13 @@ public class U_Android {
 
         int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
-        Animator anim = ViewAnimationUtils.createCircularReveal(
-                v, centerX, centerY, 0, finalRadius);
+        Animator anim = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            anim = ViewAnimationUtils.createCircularReveal(
+                    v, centerX, centerY, 0, finalRadius);
+        }
 
+        assert anim != null;
         anim.setDuration(REVEAL_DURATION);
 
         if (lis != null)
@@ -75,9 +79,7 @@ public class U_Android {
 
         activity.getWindow().getDecorView().setDrawingCacheEnabled(true);
 
-        Bitmap bmp = activity.getWindow().getDecorView().getDrawingCache();
-
-        return bmp;
+        return activity.getWindow().getDecorView().getDrawingCache();
 
     }
 }

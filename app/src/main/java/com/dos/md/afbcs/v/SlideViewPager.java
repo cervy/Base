@@ -37,9 +37,8 @@ public class SlideViewPager extends ViewGroup {
         // int childCount = getChildCount();
 //每个子child的宽度为屏幕的宽度减去与两边的间距
         int width = measuredWidth - (int) (mMarginLeftRight * 2);
-        int height = measuredHeight;
         int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
-        int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY);
 
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -112,18 +111,18 @@ public class SlideViewPager extends ViewGroup {
     /**
      * view slide direction left to right
      */
-    private static int LEFT_TO_RIGHT = 0x011;
+    private static final int LEFT_TO_RIGHT = 0x011;
 
     /***
      * view slide direction right to left
      */
 
-    private static int RIGHT_TO_LEFT = 0x022;
+    private static final int RIGHT_TO_LEFT = 0x022;
 
     /**
      * view slide direction invalid
      */
-    private static int INVALID_DIRECTION = 0x033;
+    private static final int INVALID_DIRECTION = 0x033;
 
     /**
      * A null/invalid pointer ID.
@@ -146,7 +145,7 @@ public class SlideViewPager extends ViewGroup {
      */
     public static final int SCROLL_STATE_SETTLING = 2;
 
-    public static int SNAP_VELOCITY = 600;
+    public static final int SNAP_VELOCITY = 600;
 
     private float mDownX = 0.0f;
 
@@ -416,21 +415,20 @@ public class SlideViewPager extends ViewGroup {
 //            }
             scrollTo(mScroller.getCurrX(), 0);
         }
-        completeScroll(true);
+        completeScroll();
 
     }
 
     /**
      * whether the scroll animation is end
      *
-     * @param postEvents post run the runnable event
      */
-    private void completeScroll(boolean postEvents) {
+    private void completeScroll() {
 
         boolean needPopulate = mScrollState == SCROLL_STATE_SETTLING;
 
         if (needPopulate) {
-            if (postEvents) {
+            if (true) {
                 ViewCompat.postOnAnimation(this, mEndScrollRunnable);
             } else {
                 mEndScrollRunnable.run();
@@ -478,7 +476,6 @@ public class SlideViewPager extends ViewGroup {
                     scaleView = getChildAt(position + 1);
                     shrinkView = getChildAt(position);
                     scaleRatio = SCALE_RATIO + (1.0f - SCALE_RATIO) * ratio;
-                    ;
                     shrinkRatio = 1.0f - (1.0f - SCALE_RATIO) * ratio;
                 }
             }

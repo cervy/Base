@@ -2,17 +2,17 @@
 
   <!--for the SlideViewPager extending ViewGroup        marginLeftRight是确定子View与left和right间距，gutterSize是确定原始大小子View与缩小子View间离-->
     <declare-styleable name="ScaleViewPager">
-        <attr name="marginLeftRight" format="dimension"></attr>
-        <attr name="gutterSize" format="dimension"></attr>
+        <attr name="marginLeftRight" format="dimension"/>
+        <attr name="gutterSize" format="dimension"/>
     </declare-styleable>
 
     <!--for the AccelerationProgress extending View -->
     <declare-styleable name="AccelerationProgress">
-        <attr name="accBallRadius" format="dimension"></attr>
-        <attr name="bigCircleStroke" format="dimension"></attr>
-        <attr name="accBallBackground" format="color"></attr>
-        <attr name="bigCircleBackground" format="color"></attr>
-        <attr name="duration" format="integer"></attr>
-        <attr name="timeTextSize" format="dimension"></attr>
+        <attr name="accBallRadius" format="dimension"/>
+        <attr name="bigCircleStroke" format="dimension"/>
+        <attr name="accBallBackground" format="color"/>
+        <attr name="bigCircleBackground" format="color"/>
+        <attr name="duration" format="integer"/>
+        <attr name="timeTextSize" format="dimension"/>
     </declare-styleable>
 </resources>
