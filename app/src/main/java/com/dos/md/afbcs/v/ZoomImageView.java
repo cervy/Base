@@ -1,3 +1,5 @@
+package com.dos.md.afbcs.v;
+
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -12,7 +14,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-1package com.dos.md.afbcs.v;
 
 /**
  * Created by DOS on 002/2/4/2016.
@@ -54,17 +55,20 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-if (isAutoScale)return true;
+                if (isAutoScale) return true;
                 float x = e.getX();
                 float y = e.getY();
                 if (getScale() < mMidScale) {
 
                    /* mScaleMatrix.postScale(mMidScale / getScale(), mMidScale / getScale(), x, y);
                     setImageMatrix(mScaleMatrix);// TODO: 024/24/4/2016 设置矩阵*/
-                    postDelayed(new AutoRunnable(mMidScale,x,y),16);isAutoScale=true;
+                    postDelayed(new AutoRunnable(mMidScale, x, y), 16);
+                    isAutoScale = true;
                 } else {
                     /*mScaleMatrix.postScale(mInitScale / getScale(), mInitScale / getScale(), x, y);
-                    setImageMatrix(mScaleMatrix);*/                    postDelayed(new AutoRunnable(mInitScale,x,y),16);isAutoScale=true;
+                    setImageMatrix(mScaleMatrix);*/
+                    postDelayed(new AutoRunnable(mInitScale, x, y), 16);
+                    isAutoScale = true;
 
                 }
 
@@ -72,36 +76,45 @@ if (isAutoScale)return true;
             }
         });
     }
-private boolean isAutoScale;//避免狂击
+
+    private boolean isAutoScale;//避免狂击
+
     /**
      * 自动变换（scale）
      */
-private class AutoRunnable implements Runnable{
-private float mTargetScale, x,y,tmpScale;//目标缩放值与缩放中心
-        private final float BIGGER=1.07f,SMALLER=0.93F;//缩放梯度
-        public AutoRunnable(float targetScale, float x, float y){
-            this.mTargetScale=targetScale;this.x=x;this.y=y;
-            if (getScale()<mTargetScale){
-                tmpScale=BIGGER;
+    private class AutoRunnable implements Runnable {
+        private float mTargetScale, x, y, tmpScale;//目标缩放值与缩放中心
+        private final float BIGGER = 1.07f, SMALLER = 0.93F;//缩放梯度
 
-            }if (getScale()>mTargetScale)tmpScale=SMALLER;
+        public AutoRunnable(float targetScale, float x, float y) {
+            this.mTargetScale = targetScale;
+            this.x = x;
+            this.y = y;
+            if (getScale() < mTargetScale) {
+                tmpScale = BIGGER;
+
+            }
+            if (getScale() > mTargetScale) tmpScale = SMALLER;
         }
-    @Override
-    public void run() {
-mScaleMatrix.postScale(tmpScale,tmpScale,x,y);
-        checkBorderAndCenterWhenScale();setImageMatrix(mScaleMatrix);
-        float currentScale=getScale();
-        if ((tmpScale<1.0f&&currentScale>tmpScale)||(tmpScale>1.0f&&currentScale<tmpScale)){//scale
-            postDelayed(this,16);//自调
-        }else{
-            //设置为目标scale值
-            float scale=mTargetScale/currentScale;
-            mScaleMatrix.postScale(scale,scale,x,y);
+
+        @Override
+        public void run() {
+            mScaleMatrix.postScale(tmpScale, tmpScale, x, y);
+            checkBorderAndCenterWhenScale();
             setImageMatrix(mScaleMatrix);
-            isAutoScale=false;
+            float currentScale = getScale();
+            if ((tmpScale < 1.0f && currentScale > tmpScale) || (tmpScale > 1.0f && currentScale < tmpScale)) {//scale
+                postDelayed(this, 16);//自调
+            } else {
+                //设置为目标scale值
+                float scale = mTargetScale / currentScale;
+                mScaleMatrix.postScale(scale, scale, x, y);
+                setImageMatrix(mScaleMatrix);
+                isAutoScale = false;
+            }
         }
     }
-}
+
     @Override
     public void onGlobalLayout() {
         if (!mOnce) {
@@ -259,53 +272,56 @@ mScaleMatrix.postScale(tmpScale,tmpScale,x,y);
             isCanDrag = false;
             mLastX = x;
             mLastY = y;
-        }               RectF rectF= getMatrixRectF();
+        }
+        RectF rectF = getMatrixRectF();
 
         mLastPointerCount = pointerCount;
         switch (event.getAction()) {
-            case  MotionEvent.ACTION_DOWN://滑动拦截eg.与ViewPager嵌套
-if (rectF.width()>getWidth()+0.01||rectF.height()>getHeight()+0.01){
+            case MotionEvent.ACTION_DOWN://滑动拦截eg.与ViewPager嵌套
+                if (rectF.width() > getWidth() + 0.01 || rectF.height() > getHeight() + 0.01) {
 
-if (getParent() instanceof ViewPager    )
-    getParent().requestDisallowInterceptTouchEvent(true);//不允许父控件拦截子自己的事件
+                    if (getParent() instanceof ViewPager)
+                        getParent().requestDisallowInterceptTouchEvent(true);//不允许父控件拦截子自己的事件
 
-}
+                }
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (rectF.width()>getWidth()+0.01||rectF.height()>getHeight()+0.01){
+                if (rectF.width() > getWidth() + 0.01 || rectF.height() > getHeight() + 0.01) {
                     getParent().requestDisallowInterceptTouchEvent(true);
-                float dx = x - mLastX;
-                float dy = y - mLastY;
-                if (!isCanDrag) isCanDrag = isMoveAction(dx, dy);
-                else {
-                   // RectF rectF = getMatrixRectF();
-                    if (getDrawable() != null) {
-                        isCheckLeftAndRight = isCheckTopAndBottom = true;
+                    float dx = x - mLastX;
+                    float dy = y - mLastY;
+                    if (!isCanDrag) isCanDrag = isMoveAction(dx, dy);
+                    else {
+                        // RectF rectF = getMatrixRectF();
+                        if (getDrawable() != null) {
+                            isCheckLeftAndRight = isCheckTopAndBottom = true;
 
-                        if (rectF.width() < getWidth()) {
-                            isCheckLeftAndRight = false;
-                            dx = 0;
-                        }
-                        if (rectF.height() < getHeight()) {
-                            isCheckTopAndBottom = false;
-                            dy = 0;
+                            if (rectF.width() < getWidth()) {
+                                isCheckLeftAndRight = false;
+                                dx = 0;
+                            }
+                            if (rectF.height() < getHeight()) {
+                                isCheckTopAndBottom = false;
+                                dy = 0;
 
+                            }
+                            mScaleMatrix.postScale(dx, dy);
+                            checkBorderWhenTranslate();
+                            setImageMatrix(mScaleMatrix);
                         }
-                        mScaleMatrix.postScale(dx, dy);
-                        checkBorderWhenTranslate();
-                        setImageMatrix(mScaleMatrix);
                     }
+                    mLastY = y;
+                    mLastX = x;
+                    break;
                 }
-                mLastY = y;
-                mLastX = x;
-                break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mLastPointerCount = 0;
 
                 break;
+
         }
         return true;
     }
@@ -313,6 +329,7 @@ if (getParent() instanceof ViewPager    )
     /**
      * 检查边界
      */
+
     private void checkBorderWhenTranslate() {
         RectF rect = getMatrixRectF();
         float deltaX = 0;
@@ -337,7 +354,9 @@ if (getParent() instanceof ViewPager    )
         mScaleMatrix.postTranslate(deltaX, deltaY);
     }
 
-    /**touchsloop
+    /**
+     * touchsloop
+     *
      * @param dx
      * @param dy
      * @return
