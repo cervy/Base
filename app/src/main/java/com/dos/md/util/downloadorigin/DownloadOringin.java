@@ -9,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 /**
@@ -21,8 +19,6 @@ public class DownloadOringin {
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,8 +72,6 @@ public class DownloadOringin {
 
                 file.delete();
             }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,8 +82,7 @@ public class DownloadOringin {
     private static int calculateScaleSize(int originalWidth, int originalHeight, int destWidth, int destHeight) {//向上取整
         int scaleWidth = (int) Math.ceil((originalWidth * 1.0f) / destWidth);
         int scaleHeight = (int) Math.ceil((originalHeight * 1.0f) / destHeight);
-        int inSampleSize = Math.max(scaleWidth, scaleHeight);
-        return inSampleSize;
+        return Math.max(scaleWidth, scaleHeight);
     }
 
 

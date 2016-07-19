@@ -102,8 +102,7 @@ if (defaultObject==null) return null;
                     sApplyMethod.invoke(editor);
                     return;
                 }
-            } catch (IllegalArgumentException | IllegalAccessException ignored) {
-            } catch (InvocationTargetException ignored) {
+            } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ignored) {
             }
             editor.commit();
         }

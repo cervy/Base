@@ -46,7 +46,7 @@ startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber)));�
 判断（在onCreate（和onResume里））全局user为空否决定是否已登录*/
 public class A_Base extends AppCompatActivity {
     private FrameLayout container;
-    public Toolbar toolbar;
+    protected Toolbar toolbar;
     //private MyHandler handler;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class A_Base extends AppCompatActivity {
         // 设置分享的内容setShareContent();
 
     }
+
     protected <T extends View> T f(int rid) {
         return (T) findViewById(rid);
     }//免按强转键。。。。
@@ -119,6 +120,7 @@ public class A_Base extends AppCompatActivity {
 
     //右菜单+(左侧返回)
     public final void rightMenu(String title, Toolbar.OnMenuItemClickListener listener) {
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(title);
 
         toolbar.setOnMenuItemClickListener(listener);

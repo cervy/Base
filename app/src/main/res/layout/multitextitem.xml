@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:textColor="@android:color/holo_green_dark"
         android:layout_height="wrap_content"
-        android:drawableRight="@android:mipmap/sym_def_app_icon"
+        android:drawableEnd="@android:mipmap/sym_def_app_icon"
         />
 
     <TextView
@@ -22,6 +22,6 @@
         android:layout_width="match_parent"
 android:text="dfa"
         android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/alert_light_frame"
+        android:drawableStart="@android:drawable/alert_light_frame"
         android:textColor="@android:color/holo_blue_bright"/>
 </LinearLayout>

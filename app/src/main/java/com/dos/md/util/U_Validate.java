@@ -311,7 +311,7 @@ public class U_Validate {
     public static String convert(String ori) {
         char aChar;
         int len = ori.length();
-        StringBuffer outBuffer = new StringBuffer(len);
+        StringBuilder outBuffer = new StringBuilder(len);
         for (int x = 0; x < len; ) {
             aChar = ori.charAt(x++);
             if (aChar == '\\') {

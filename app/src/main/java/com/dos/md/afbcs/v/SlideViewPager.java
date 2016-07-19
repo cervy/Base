@@ -428,11 +428,11 @@ public class SlideViewPager extends ViewGroup {
         boolean needPopulate = mScrollState == SCROLL_STATE_SETTLING;
 
         if (needPopulate) {
-            if (true) {
+           // if (true) {
                 ViewCompat.postOnAnimation(this, mEndScrollRunnable);
-            } else {
-                mEndScrollRunnable.run();
-            }
+            //} else {
+              //  mEndScrollRunnable.run();
+            //}
 
         }
 
