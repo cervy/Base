@@ -18,7 +18,7 @@
     <string name="communicate">Communicate</string>
     <string name="send">Send</string>
     <string name="share">Share</string>
-    <string name="build.gradleOfBuidjar">import com.android.build.gradle.AppPlugin
+    <string name="buildgradleOfBuidjar">import com.android.build.gradle.AppPlugin
         import proguard.gradle.ProGuardTask
 
         apply plugin: 'com.android.application'
@@ -95,8 +95,7 @@
 
         AppPlugin appPlugin = getPlugins().findPlugin(AppPlugin)
         if (appPlugin != null) {
-        "List
-        <String> runtimeJarList
+        List String runtimeJarList
         if (appPlugin.getMetaClass().getMetaMethod("getRuntimeJarList")) {
         runtimeJarList = appPlugin.getRuntimeJarList()
         } else if (android.getMetaClass().getMetaMethod("getBootClasspath")) {
