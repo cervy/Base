@@ -39,6 +39,7 @@ public class Communication {
         }
     }
 
+
     protected void connectServerWithUDPSocket() {
 
         DatagramSocket socket;
