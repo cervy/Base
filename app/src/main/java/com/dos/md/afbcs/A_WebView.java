@@ -48,6 +48,11 @@ public class A_WebView extends A_Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         wv = new WebView(getApplicationContext());
+        wv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+         setting.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+        setting.setLoadsImagesAutomatically(true);        
+
         setting = wv.getSettings();
 
         setting.setJavaScriptEnabled(true);
@@ -125,6 +130,12 @@ public class A_WebView extends A_Base {
                                 public void onPageFinished(WebView view, String url) {//不稳定
                                     super.onPageFinished(view, url);
                                     Log.d(url, "pageFinished:");
+                            
+          
+                if (!wv.getSettings().getLoadsImagesAutomatically()) {
+                    setting.setLoadsImagesAutomatically(true);
+                }
+          
                                 }
 
                                 @Override
