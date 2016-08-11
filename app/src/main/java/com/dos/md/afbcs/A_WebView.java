@@ -195,7 +195,7 @@ public class A_WebView extends A_Base {
         wv.clearCache(true);
         wv.clearHistory();
 
-        container.removeAllViews();
+        container.removeAllViews();//and othres need to if wrap the webview
         wv.stopLoading();
         wv.removeAllViews();
         wv.destroy();
