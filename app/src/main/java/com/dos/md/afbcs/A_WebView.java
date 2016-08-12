@@ -192,8 +192,8 @@ public class A_WebView extends A_Base {
     @Override
     protected void onPause() {
         super.onPause();
-        // TODO: 016/16/6/2016 停止runningjs if runnnig      setting.setJavaScriptEnabled(false); or
-        wv.onPause();
+        // TODO: onPause()
+        wv.pauseTimers();
     }
 
     @Override
