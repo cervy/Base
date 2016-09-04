@@ -27,19 +27,27 @@
             android:name=".A_Splash"
             android:alwaysRetainTaskState="true"
             android:screenOrientation="portrait"
-        >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".afbcs.A_Main"
-                  android:label="Main"
-                  android:launchMode="singleTask"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".afbcs.A_Guide"
-                  android:screenOrientation="portrait"/>
+
+
+        <activity
+            android:name=".afbcs.A_Main"
+            android:configChanges="keyboardHidden|locale"
+            android:label="Main"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".afbcs.A_Guide"
+            android:configChanges="keyboardHidden|locale"
+
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

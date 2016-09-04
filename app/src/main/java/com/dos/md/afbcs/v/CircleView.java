@@ -13,47 +13,49 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 /**
- * Created by Administrator on 2015/12/10.
+ * Created by Administrator on 2015/12/10.2D绘图 Canvas Paint Bitmap,BitmapFactory,BitmapRegionDecoder,ImageFormat,Movie,NinePatch 过度模式 Xfermode 主要子类 PoterDuffXfermode 过滤 RGB过滤 ColorFilter的三个子类 ColorMatrixFilter, PoterDuffColorFilter, LightingColorFilter alpha过滤 MaskFilter的两个实现类 BlurMaskFiler, EmbossMaskFilter DrawFilter的实现 PaintFlagsDrawFilter 变换 Matrix Camera ColorMAtrix 渐变 Shader的五个实现 BitmapShader, LinearGradient, SweepGradient, RadialGradient, ComposeShader 路径 Path PathEffect PathMeasure Rasterizer 区域 Region Drawable系列 BitmapDrawable，ShapeDrawable，LayerDrawable等
  */
 public class CircleView extends View {
-private int mTouchSlop;
+    private int mTouchSlop, mWidth, mHeight;
+
     public CircleView(Context context) {
         //super(context);
         this(context, null);
         //paint.setColor(color);
-          mTouchSlop=ViewConfiguration.get(context).getScaledTouchSlop ();
+       // mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
     }
 
     public CircleView(Context context, AttributeSet attrs) {
 //        super(context, attrs);
-        this(context, attrs, 0);        mTouchSlop=ViewConfiguration.get(context).getScaledTouchSlop ();
+        this(context, attrs, 0);
+       // mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
     }
 
     public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mTouchSlop=ViewConfiguration.get(context).getScaledTouchSlop ();
-
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+paint.setStyle(Paint.Style.FILL);//STROKE                //描边                FILL_AND_STROKE       //描边加填充
         //获取xml中自定义属性
 
     }
 
-    private int color= Color.RED;
-    private final Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
+    private int color = Color.RED;
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     @Override
     protected void onDraw(Canvas canvas) {
-        final int paddingLeft=getPaddingLeft();
-        final int paddingRight=getPaddingRight();
-        final int paddingTop=getPaddingTop();
-        final int paddingButtom=getPaddingBottom();
+        final int paddingLeft = getPaddingLeft();
+        final int paddingRight = getPaddingRight();
+        final int paddingTop = getPaddingTop();
+        final int paddingButtom = getPaddingBottom();
 
 
-        int width=getWidth()-paddingLeft-paddingRight;
-        int height=getHeight()-paddingButtom-paddingTop;
-        int radius=Math.min(width, height)/2;
-        canvas.drawCircle(paddingLeft+width/2, paddingTop+height/2, radius, paint);
+        int width = getWidth() - paddingLeft - paddingRight;
+        int height = getHeight() - paddingButtom - paddingTop;
+        int radius = Math.min(width, height) / 2;
+        canvas.drawCircle(paddingLeft + width / 2, paddingTop + height / 2, radius, paint);
 
     }
 
@@ -90,8 +92,8 @@ private int mTouchSlop;
                 float curY = event.getY();
                 int deltaX = (int) (mLastX - curX);
                 int deltaY = (int) (mLastY - curY);
-                if (!mIsBeingDragged && (Math.abs(deltaX)> mTouchSlop ||
-                        Math.abs(deltaY)> mTouchSlop)) {
+                if (!mIsBeingDragged && (Math.abs(deltaX) > mTouchSlop ||
+                        Math.abs(deltaY) > mTouchSlop)) {
                     mIsBeingDragged = true;
                     // 让第一次滑动的距离和之后的距离不至于差距太大
                     // 因为第一次必须>TouchSlop,之后则是直接滑动
@@ -175,8 +177,17 @@ private int mTouchSlop;
             default:
         }*/
 
-    }private float mLastX, mLastY;
+    }
+
+    private float mLastX, mLastY;
     private boolean mIsBeingDragged;
     private int activePointerIndex, mSecondaryPointerId;
     private float mSecondaryLastX, mSecondaryLastY;
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = w;
+        mHeight = h;
+    }
 }

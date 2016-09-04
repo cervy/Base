@@ -18,7 +18,7 @@ public class RoundCornerDrawable extends Drawable {
 
     private RectF rectF;
 
-    public RoundCornerDrawable(Bitmap bitmap) {
+    public RoundCornerDrawable(Bitmap bitmap)  {
         mBitmap = bitmap;
         BitmapShader bitmapShader = new BitmapShader(bitmap, TileMode.CLAMP,
                 TileMode.CLAMP);
