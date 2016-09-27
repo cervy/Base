@@ -1,4 +1,4 @@
-package com.imooc;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,18 +8,15 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/*
- * ·şÎñÆ÷Ïß³Ì´¦ÀíÀà
- */
+
 public class ServerThread extends Thread {
-	// ºÍ±¾Ïß³ÌÏà¹ØµÄSocket
+	
 	Socket socket = null;
 
 	public ServerThread(Socket socket) {
 		this.socket = socket;
 	}
-	
-	//Ïß³ÌÖ´ĞĞµÄ²Ù×÷£¬ÏìÓ¦¿Í»§¶ËµÄÇëÇó
+
 	public void run(){
 		InputStream is=null;
 		InputStreamReader isr=null;
@@ -27,25 +24,28 @@ public class ServerThread extends Thread {
 		OutputStream os=null;
 		PrintWriter pw=null;
 		try {
-			//»ñÈ¡ÊäÈëÁ÷£¬²¢¶ÁÈ¡¿Í»§¶ËĞÅÏ¢
+			//receive
 			is = socket.getInputStream();
+			
 			isr = new InputStreamReader(is);
 			br = new BufferedReader(isr);
 			String info=null;
-			while((info=br.readLine())!=null){//Ñ­»·¶ÁÈ¡¿Í»§¶ËµÄĞÅÏ¢
-				System.out.println("ÎÒÊÇ·şÎñÆ÷£¬¿Í»§¶ËËµ£º"+info);
+			while((info=br.readLine())!=null){
+				System.out.println("æˆ‘æ˜¯æœåŠ¡å™¨ï¼Œå®¢æˆ·ç«¯è¯´ï¼š"+info);
 			}
-			socket.shutdownInput();//¹Ø±ÕÊäÈëÁ÷
-			//»ñÈ¡Êä³öÁ÷£¬ÏìÓ¦¿Í»§¶ËµÄÇëÇó
+			socket.shutdownInput();
+			
+			//send
 			os = socket.getOutputStream();
+			
 			pw = new PrintWriter(os);
-			pw.write("»¶Ó­Äú£¡");
-			pw.flush();//µ÷ÓÃflush()·½·¨½«»º³åÊä³ö
+			pw.write("æ¬¢è¿ï¼");
+			pw.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			//¹Ø±Õ×ÊÔ´
+		
 			try {
 				if(pw!=null)
 					pw.close();
