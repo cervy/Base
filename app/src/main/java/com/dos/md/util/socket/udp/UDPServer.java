@@ -1,42 +1,34 @@
-package com.imooc;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-/*
- * ·şÎñÆ÷¶Ë£¬ÊµÏÖ»ùÓÚUDPµÄÓÃ»§µÇÂ½
- */
+
 public class UDPServer {
 	public static void main(String[] args) throws IOException {
-		/*
-		 * ½ÓÊÕ¿Í»§¶Ë·¢ËÍµÄÊı¾İ
-		 */
-		//1.´´½¨·şÎñÆ÷¶ËDatagramSocket£¬Ö¸¶¨¶Ë¿Ú
-		DatagramSocket socket=new DatagramSocket(8800);
-		//2.´´½¨Êı¾İ±¨£¬ÓÃÓÚ½ÓÊÕ¿Í»§¶Ë·¢ËÍµÄÊı¾İ
-		byte[] data =new byte[1024];//´´½¨×Ö½ÚÊı×é£¬Ö¸¶¨½ÓÊÕµÄÊı¾İ°üµÄ´óĞ¡
-		DatagramPacket packet=new DatagramPacket(data, data.length);
-		//3.½ÓÊÕ¿Í»§¶Ë·¢ËÍµÄÊı¾İ
-		System.out.println("****·şÎñÆ÷¶ËÒÑ¾­Æô¶¯£¬µÈ´ı¿Í»§¶Ë·¢ËÍÊı¾İ");
-		socket.receive(packet);//´Ë·½·¨ÔÚ½ÓÊÕµ½Êı¾İ±¨Ö®Ç°»áÒ»Ö±×èÈû
-		//4.¶ÁÈ¡Êı¾İ
-		String info=new String(data, 0, packet.getLength());
-		System.out.println("ÎÒÊÇ·şÎñÆ÷£¬¿Í»§¶ËËµ£º"+info);
 		
-		/*
-		 * Ïò¿Í»§¶ËÏìÓ¦Êı¾İ
-		 */
-		//1.¶¨Òå¿Í»§¶ËµÄµØÖ·¡¢¶Ë¿ÚºÅ¡¢Êı¾İ
+		DatagramSocket socket=new DatagramSocket(8800);
+		
+		byte[] data =new byte[1024];
+		DatagramPacket packet=new DatagramPacket(data, data.length);
+		
+		socket.receive(packet);//æ­¤æ–¹æ³•åœ¨æ¥æ”¶åˆ°æ•°æ®æŠ¥ä¹‹å‰ä¼šä¸€ç›´é˜»å¡
+		
+		String info=new String(data, 0, packet.getLength());
+		System.out.println("æˆ‘æ˜¯æœåŠ¡å™¨ï¼Œå®¢æˆ·ç«¯è¯´ï¼š"+info);
+		
+		
+		
 		InetAddress address=packet.getAddress();
 		int port=packet.getPort();
-		byte[] data2="»¶Ó­Äú!".getBytes();
-		//2.´´½¨Êı¾İ±¨£¬°üº¬ÏìÓ¦µÄÊı¾İĞÅÏ¢
+		byte[] data2="æ¬¢è¿!".getBytes();
+		
 		DatagramPacket packet2=new DatagramPacket(data2, data2.length, address, port);
-		//3.ÏìÓ¦¿Í»§¶Ë
+		
+		
 		socket.send(packet2);
-		//4.¹Ø±Õ×ÊÔ´
+		
 		socket.close();
 	}
 }
