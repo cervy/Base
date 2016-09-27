@@ -1,4 +1,3 @@
-package com.imooc;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -7,37 +6,31 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-/*
- * ¿Í»§¶Ë
- */
+
 public class UDPClient {
 	public static void main(String[] args) throws IOException {
-		/*
-		 * Ïò·şÎñÆ÷¶Ë·¢ËÍÊı¾İ
-		 */
-		//1.¶¨Òå·şÎñÆ÷µÄµØÖ·¡¢¶Ë¿ÚºÅ¡¢Êı¾İ
+		
 		InetAddress address=InetAddress.getByName("localhost");
 		int port=8800;
-		byte[] data="ÓÃ»§Ãû£ºadmin;ÃÜÂë£º123".getBytes();
-		//2.´´½¨Êı¾İ±¨£¬°üº¬·¢ËÍµÄÊı¾İĞÅÏ¢
+		byte[] data="ç”¨æˆ·åï¼šadmin;å¯†ç ï¼š123".getBytes();
+		
+		
 		DatagramPacket packet=new DatagramPacket(data, data.length, address, port);
-		//3.´´½¨DatagramSocket¶ÔÏó
 		DatagramSocket socket=new DatagramSocket();
-		//4.Ïò·şÎñÆ÷¶Ë·¢ËÍÊı¾İ±¨
+		
+		
 		socket.send(packet);
 		
-		/*
-		 * ½ÓÊÕ·şÎñÆ÷¶ËÏìÓ¦µÄÊı¾İ
-		 */
-		//1.´´½¨Êı¾İ±¨£¬ÓÃÓÚ½ÓÊÕ·şÎñÆ÷¶ËÏìÓ¦µÄÊı¾İ
+		
+		
 		byte[] data2=new byte[1024];
 		DatagramPacket packet2=new DatagramPacket(data2, data2.length);
-		//2.½ÓÊÕ·şÎñÆ÷ÏìÓ¦µÄÊı¾İ
+	
 		socket.receive(packet2);
-		//3.¶ÁÈ¡Êı¾İ
+		
+		
 		String reply=new String(data2, 0, packet2.getLength());
-		System.out.println("ÎÒÊÇ¿Í»§¶Ë£¬·şÎñÆ÷Ëµ£º"+reply);
-		//4.¹Ø±Õ×ÊÔ´
+		System.out.println("æˆ‘æ˜¯å®¢æˆ·ç«¯ï¼ŒæœåŠ¡å™¨è¯´ï¼š"+reply);
 		socket.close();
 	}
 }
