@@ -1,5 +1,3 @@
-package com.imooc;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,28 +7,28 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-/*
- * ¿Í»§¶Ë
- */
+
 public class Client {
 	public static void main(String[] args) {
 		try {
-			//1.´´½¨¿Í»§¶ËSocket£¬Ö¸¶¨·şÎñÆ÷µØÖ·ºÍ¶Ë¿Ú
+			
 			Socket socket=new Socket("localhost", 8888);
-			//2.»ñÈ¡Êä³öÁ÷£¬Ïò·şÎñÆ÷¶Ë·¢ËÍĞÅÏ¢
-			OutputStream os=socket.getOutputStream();//×Ö½ÚÊä³öÁ÷
-			PrintWriter pw=new PrintWriter(os);//½«Êä³öÁ÷°ü×°Îª´òÓ¡Á÷
-			pw.write("ÓÃ»§Ãû£ºalice;ÃÜÂë£º789");
+			
+			OutputStream os=socket.getOutputStream
+				
+			PrintWriter pw=new PrintWriter(os);//å°†è¾“å‡ºæµåŒ…è£…ä¸ºæ‰“å°æµ
+			pw.write("ç”¨æˆ·åï¼šalice;å¯†ç ï¼š789");
 			pw.flush();
-			socket.shutdownOutput();//¹Ø±ÕÊä³öÁ÷
-			//3.»ñÈ¡ÊäÈëÁ÷£¬²¢¶ÁÈ¡·şÎñÆ÷¶ËµÄÏìÓ¦ĞÅÏ¢
+			socket.shutdownOutput();
+			//3.è·å–è¾“å…¥æµï¼Œå¹¶è¯»å–æœåŠ¡å™¨ç«¯çš„å“åº”ä¿¡æ¯
 			InputStream is=socket.getInputStream();
+			
 			BufferedReader br=new BufferedReader(new InputStreamReader(is));
 			String info=null;
 			while((info=br.readLine())!=null){
-				System.out.println("ÎÒÊÇ¿Í»§¶Ë£¬·şÎñÆ÷Ëµ£º"+info);
+				System.out.println("æœåŠ¡å™¨è¯´ï¼š"+info);
 			}
-			//4.¹Ø±Õ×ÊÔ´
+			
 			br.close();
 			is.close();
 			pw.close();
