@@ -29,7 +29,7 @@ public class Server {
 				socket=serverSocket.accept();
 				
 				ServerThread serverThread=new ServerThread(socket);
-				serverThread.start();
+				serverThread.start();//客户端接收与回复
 				
 				count++;//统计客户端的数量
 				
