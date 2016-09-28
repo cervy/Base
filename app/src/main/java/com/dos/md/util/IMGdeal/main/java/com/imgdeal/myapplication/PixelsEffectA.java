@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-public class PixelsEffect extends Activity {
+public class PixelsEffectA extends Activity {
 
     private ImageView imageView1,imageView2,imageView3,imageView4;
 
