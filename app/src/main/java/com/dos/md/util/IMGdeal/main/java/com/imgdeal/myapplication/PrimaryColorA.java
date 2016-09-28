@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
-public class PrimaryColor extends Activity implements SeekBar.OnSeekBarChangeListener{
+public class PrimaryColorA extends Activity implements SeekBar.OnSeekBarChangeListener{
 
     private ImageView mImageView;
     private SeekBar mSeekbarhue,mSeekbarSaturation, mSeekbarLum;
