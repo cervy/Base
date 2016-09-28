@@ -1,4 +1,4 @@
-package com.imooc.myimooc;
+package com.imgdeal.myapplication;
 
 import android.app.Activity;
 import android.graphics.Matrix;
@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 
 /**
- * Created by Administrator on 2015/2/1 0001.
+ 
  */
-public class ImageMatrixTest extends Activity {
+public class ImageMatrixA extends Activity {
 
     private GridLayout mGridLayout;
     private ImageMatrixView mImageMatrixView;
