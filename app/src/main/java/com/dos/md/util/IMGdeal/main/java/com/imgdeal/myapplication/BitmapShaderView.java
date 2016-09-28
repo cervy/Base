@@ -1,4 +1,4 @@
-package com.imooc.myimooc;
+package com.imgdeal.myapplication;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,7 @@ import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class BitmapShaderView extends View {
+public class BitmapShaderView extends View {//圆
 
     private Bitmap mBitmap;
     private Paint mPaint;
