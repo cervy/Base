@@ -1,4 +1,4 @@
-package com.imooc.myimooc;
+package com.imgdeal.myapplication;
 
 import android.content.Context;
 import android.graphics.Bitmap;
