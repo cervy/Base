@@ -1,12 +1,12 @@
-package com.imooc.myimooc;
+package com.imgdeal.myapplication;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Administrator on 2015/3/14 0014.
+ *  
  */
-public class BitmapShaderTest extends Activity {
+public class BitmapShader extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
