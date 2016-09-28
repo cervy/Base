@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
-public class ColorMatrix extends Activity {
+public class ColorMatrixA extends Activity {
 
     private ImageView mImageView;
     private GridLayout mGroup;
