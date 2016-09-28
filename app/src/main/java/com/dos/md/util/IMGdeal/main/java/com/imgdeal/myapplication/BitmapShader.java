@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- *  
+ *  圆
  */
 public class BitmapShader extends Activity {
 
