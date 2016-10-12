@@ -8,11 +8,12 @@
 
     </style>
 
-    <!-- <style name="AppTheme.NoActionBar">
-    android:windowbackground="null"
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>-->
+   <style name="live">
+       <item name="android:windowbackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="andriod:windowBackground">@null</item>
+       <item name="andriod:windowIsTranslucent>true</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
