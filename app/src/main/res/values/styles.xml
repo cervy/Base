@@ -9,10 +9,23 @@
     </style>
 
    <style name="live">
-       <item name="android:windowbackground">@android:color/transparent</item>
+       <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+       
         <item name="andriod:windowBackground">@null</item>
        <item name="andriod:windowIsTranslucent>true</item>
+                   
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+       
+        <item name="andriod:windowContentOverlay">@null</item>
+       <item name="andriod:backgroundDimEnabled">false</item>
+                   
+       <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+       
+        <item name="andriod:windowNoDisplay">false</item>
+       
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
