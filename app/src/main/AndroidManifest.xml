@@ -37,6 +37,16 @@
 
 
         <activity
+            android:name=".afbcs.A_Alive"
+            android:configChanges="keyboardHidden|locale|orientation"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"
+            android:process=":alive"
+            android:theme="@style/live"
+            />      
+        <activity
             android:name=".afbcs.A_Main"
             android:configChanges="keyboardHidden|locale"
             android:label="Main"
