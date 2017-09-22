@@ -1,6 +1,5 @@
-package com.acadsoc.apps.utils;
-
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,7 +17,10 @@ import java.util.ArrayList;
 /**
  * Created by  Lynch
  * <p>
- * * 默认最外层为jsonObject
+ * * 默认响应体最外层为jsonObject
+ * <p>
+ * 若异常则没传jsonObject或array的类型参数，
+ * 否则传了或只是常规字符串（含'空'）
  */
 
 public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
@@ -103,13 +105,14 @@ public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
                         onMinusThirteen();
                         break;
 
-
                     case S.MINUSTwo: //{"code":-2,"msg":"没检测到上载的文件，请确认后上载!","data":null}
                         onMinusTwo();
                         break;
                     default:
-                }
+                        onElse(code);//   综合
 
+                        break;
+                }
                 dismissProgress();
                 return;
             }
@@ -135,6 +138,7 @@ public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
             MyLogUtil.e("async请求到的data：" + data);
 
             if (data.startsWith("{")) {
+                Log.d("setData", "setData=" + data);
                 onSucceed(gson.fromJson(data,
 //                        getType()
                         getTypeAuto()
@@ -166,6 +170,15 @@ public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
 
     }
 
+    /**
+     * 非典型状态
+     *
+     * @param code
+     */
+    protected void onElse(int code) {
+
+    }
+
 
     protected void onMinusThirteen() {
 
@@ -187,11 +200,11 @@ public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
     }
 
     /**
-     * 其它结构或data下的常规字符串
+     * 其它顶层结构（第一级非jsonobject）或’data‘下的常规字符串
      *
-     * @param ResultOrDataString
+     * @param data
      */
-    protected void onSucceedString(String ResultOrDataString) {
+    protected void onSucceedString(String data) {
     }
 
     protected void onMinusSix() {
@@ -222,12 +235,11 @@ public abstract class CallbackForasynchttp<T> extends TextHttpResponseHandler {
     /**
      * data字段下成功返回jsonarray
      *
-     * @param datas
+     * @param data
      */
-    protected void onSuccesss(ArrayList<T> datas) {
+    protected void onSuccesss(ArrayList<T> data) {
     }
 
-    ;
 
     /**
      * 已经自动化了
